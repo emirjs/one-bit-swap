@@ -1,11 +1,22 @@
 import { RolesBilleteras } from '@lib/types.d'
 import Billeteras from '@models/Billeteras'
+import { listaBilleteras } from 'scripts/modelos'
+import { Estados } from './../types.d'
 
 export default class GestorBilleteras {
   private _billeteras: Array<Billeteras>
+  private static _gestor: GestorBilleteras
 
   constructor() {
     this._billeteras = []
+  }
+
+  public static instanciar(): GestorBilleteras {
+    if (!this._gestor) {
+      GestorBilleteras._gestor = new GestorBilleteras()
+    }
+
+    return GestorBilleteras._gestor
   }
 
   nuevo(direccion: string): Billeteras {
@@ -19,8 +30,17 @@ export default class GestorBilleteras {
     return true
   }
 
-  buscar(): Billeteras[] {
-    return this._billeteras
+  buscar(
+    billetera: string,
+    rol: RolesBilleteras,
+    estado: Estados
+  ): Billeteras[] {
+    return listaBilleteras.filter(
+      (b: Billeteras) =>
+        (b.direccion == billetera || billetera == '') &&
+        (b.rol == rol || rol == RolesBilleteras.usuario) &&
+        (b.estado == estado || estado == Estados.todos)
+    ) as Billeteras[]
   }
 
   /**

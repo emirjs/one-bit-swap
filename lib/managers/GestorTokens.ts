@@ -1,4 +1,5 @@
 import Tokens from '../models/Tokens'
+import { listaTokens } from './../../scripts/modelos'
 export default class GestorTokens {
   private _tokens: Array<Tokens>
   private static _gestor: GestorTokens
@@ -25,7 +26,7 @@ export default class GestorTokens {
     return true
   }
 
-  buscar(): Tokens[] {
-    return this._tokens
+  buscar(ticker: string): Tokens[] {
+    return listaTokens.filter((el) => el.ticker == ticker || ticker == '')
   }
 }

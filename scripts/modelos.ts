@@ -1,7 +1,8 @@
 import Ordenes from '@lib/models/Ordenes'
 import Tokens from '@lib/models/Tokens'
-import { Estados, RolesBilleteras, TiposOrdenes } from '@lib/types.d'
+import { RolesBilleteras, TiposOrdenes } from '@lib/types.d'
 import Billeteras from '@models/Billeteras'
+import { Estados } from './../lib/types.d'
 
 // tokens
 // tokens desactivados
@@ -27,12 +28,18 @@ export const b2 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7442')
 export const b3 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7443')
 export const b4 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7444')
 export const b5 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7445')
+b5.rol = RolesBilleteras.administrador
 export const b6 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7446')
+b6.rol = RolesBilleteras.administrador
 export const b7 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7447')
+b7.estado = Estados.suspendido
 export const b8 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7448')
+b8.estado = Estados.suspendido
 export const b9 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7449')
 export const b10 = new Billeteras('0xD16DA42A2f5C89223E8f2e35e7F1B0a499cf7440')
-b10.rol = RolesBilleteras.administrador
+b10.rol = RolesBilleteras.propietario
+
+export const listaBilleteras = [b1, b2, b3, b4, b5, b6, b7, b8, b9, b10]
 
 export const listaTokens = [
   tMATIC,

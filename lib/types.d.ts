@@ -1,12 +1,14 @@
 export enum Estados {
   activo = 0,
   suspendido = 1,
+  todos = 2,
 }
 
 export enum EstadosOrdenes {
   activa = 0,
   cancelada = 2,
   finalizada = 3,
+  todas = 4,
 }
 
 export enum TiposOrdenes {
@@ -49,24 +51,24 @@ export enum Acciones {
 
 export enum TipoColumna {
   // ordenes
-  id = 'Id',
-  tipo = 'Tipo',
-  cantidadVenta = 'CantidadVenta',
-  tokenVenta = 'TokenVenta',
-  cantidadCompra = 'CantidadCompra',
-  tokenCompra = 'TokenCompra',
-  fechaCreacion = 'FechaCreacion',
-  boton = 'Boton',
+  id = 'id',
+  tipo = 'tipo',
+  cantidadVenta = 'cantidadVenta',
+  tokenVenta = 'tokenVenta',
+  cantidadCompra = 'cantidadCompra',
+  tokenCompra = 'tokenCompra',
+  fechaCreacion = 'fechaCreacion',
+  boton = 'boton',
   // tokens
-  ticker = 'Ticker',
-  simbolo = 'Simbolo',
-  contrato = 'Contrato',
+  ticker = 'ticker',
+  simbolo = 'simbolo',
+  contrato = 'contrato',
   // billeteras
-  rol = 'Rol',
-  billetera = 'Billetera',
+  rol = 'rol',
+  direccion = 'direccion',
   // comunes
-  estado = 'Estado',
-  acciones = 'Acciones',
+  estado = 'estado',
+  acciones = 'acciones',
 }
 
 export interface Columna {

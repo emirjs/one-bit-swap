@@ -12,48 +12,21 @@ import {
   TipoColumna,
 } from '@lib/types.d'
 import {
-  Box,
   Button,
   Checkbox,
   Paper,
-  Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TablePagination,
   TableRow,
-  Tabs,
   TextField,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { b10 } from '../scripts/modelos'
-import VistaBilleteras from './VistaBilleteras'
-import VistaTokens from './VistaTokens'
 
-interface TabPanelProps {
-  children?: React.ReactNode
-  index: NavMenu
-  value: NavMenu
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  )
-}
-
-export default function VistaAdminsitrador() {
+export default function VistaBilleteras() {
   const [getTabValue, setTabValue] = useState(NavMenu.billeteras)
   const [getBilleteraUsuario, setBilleteraUsuario] = useState(b10)
   const [getTableData, setTableData] = useState<Billeteras[] | Tokens[]>([])
@@ -367,29 +340,6 @@ export default function VistaAdminsitrador() {
 
   return (
     <div>
-      <Tabs
-        value={getTabValue}
-        onChange={handleTabChange}
-        textColor="secondary"
-        indicatorColor="secondary"
-        aria-label="secondary tabs example"
-      >
-        {gestorBilletera.verificarRol(getBilleteraUsuario) > 1 && (
-          <Tab value={NavMenu.billeteras} label={NavMenu.billeteras} />
-        )}
-        {gestorBilletera.verificarRol(getBilleteraUsuario) > 1 && (
-          <Tab value={NavMenu.tokens} label={NavMenu.tokens} />
-        )}
-      </Tabs>
-
-      <TabPanel value={getTabValue} index={NavMenu.billeteras}>
-        <VistaBilleteras></VistaBilleteras>
-      </TabPanel>
-
-      <TabPanel value={getTabValue} index={NavMenu.tokens}>
-        <VistaTokens></VistaTokens>
-      </TabPanel>
-
       <Button variant="contained" onClick={handleClicNuevo}>
         Nuevo
       </Button>
