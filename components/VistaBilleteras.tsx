@@ -1,19 +1,8 @@
-import BlockchainAdapter from '@lib/BlockchainAdapter'
 import GestorBilleteras from '@lib/managers/GestorBilleteras'
-import GestorTokens from '@lib/managers/GestorTokens'
 import Billeteras from '@lib/models/Billeteras'
-import Tokens from '@lib/models/Tokens'
-import {
-  Acciones,
-  Columna,
-  Estados,
-  NavMenu,
-  RolesBilleteras,
-  TipoColumna,
-} from '@lib/types.d'
+import { Columna, Estados, RolesBilleteras, TipoColumna } from '@lib/types.d'
 import {
   Button,
-  Checkbox,
   Paper,
   Table,
   TableBody,
@@ -24,145 +13,23 @@ import {
   TextField,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { b10 } from '../scripts/modelos'
+import Nuevo from './NuevoAdministrador'
 
 export default function VistaBilleteras() {
-  const [getTabValue, setTabValue] = useState(NavMenu.billeteras)
-  const [getBilleteraUsuario, setBilleteraUsuario] = useState(b10)
-  const [getTableData, setTableData] = useState<Billeteras[] | Tokens[]>([])
+  const [getTableData, setTableData] = useState<Billeteras[]>([])
   //const [getTableData, setTableData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [getColumnas, setColumnas] = useState<Columna[]>([])
-  const [getIncluyeBajas, setIncluyeBajas] = useState(Estados.suspendido)
-  const adapter = BlockchainAdapter.instanciar()
-  const gestorBilletera = new GestorBilleteras()
-  const gestorTokens = GestorTokens.instanciar()
+  const [getTextoBusqueda, setTextoBusqueda] = useState('')
 
-  const handleTabChange = (
-    event: React.SyntheticEvent,
-    nuevoValor: NavMenu
-  ) => {
-    setTabValue(nuevoValor)
-    if (nuevoValor == NavMenu.billeteras) {
-      setColumnas([
-        {
-          id: TipoColumna.direccion,
-          label: TipoColumna.direccion,
-          minWidth: 50,
-          align: 'left',
-        },
-        {
-          id: TipoColumna.rol,
-          label: TipoColumna.rol,
-          minWidth: 50,
-          align: 'left',
-        },
-        {
-          id: TipoColumna.estado,
-          label: TipoColumna.estado,
-          minWidth: 50,
-          align: 'left',
-        },
-        {
-          id: TipoColumna.acciones,
-          label: TipoColumna.acciones,
-          minWidth: 50,
-          align: 'left',
-        },
-      ])
-      const data = GestorBilleteras.instanciar().buscar(
-        '',
-        RolesBilleteras.usuario,
-        Estados.todos
-      )
-      setTableData(data)
-    } else if (nuevoValor == NavMenu.tokens) {
-      // setear data de tokens
-      setColumnas([
-        {
-          id: TipoColumna.simbolo,
-          label: TipoColumna.simbolo,
-          minWidth: 50,
-          align: 'left',
-        },
-        {
-          id: TipoColumna.ticker,
-          label: TipoColumna.ticker,
-          minWidth: 50,
-          align: 'left',
-        },
-        {
-          id: TipoColumna.contrato,
-          label: TipoColumna.contrato,
-          minWidth: 50,
-          align: 'left',
-        },
-        {
-          id: TipoColumna.estado,
-          label: TipoColumna.estado,
-          minWidth: 50,
-          align: 'left',
-        },
-        {
-          id: TipoColumna.acciones,
-          label: TipoColumna.acciones,
-          minWidth: 50,
-          align: 'left',
-        },
-      ])
-      const data = GestorTokens.instanciar().buscar('')
-      setTableData(data)
-    }
-  }
-
-  const handleBloquearPlataforma = () => {
-    console.log('plataforma bloqueada')
-  }
-
-  function handleClickAccion(accion: Acciones) {
-    switch (accion) {
-      case Acciones.activar:
-        console.log(accion)
-        //llamar a funcion de activar
-        break
-      case Acciones.desactivar:
-        console.log(accion)
-        // llamar a funcion de desactivar
-        break
-      case Acciones.admin:
-        console.log(accion)
-        // llamar a funcion de hacer Admin
-        break
-      case Acciones.superadmin:
-        console.log(accion)
-        // llamar a funcion de hacer superadmin
-        break
-      case Acciones.modificar:
-        console.log(accion)
-        // llamar a funcion de modificar
-        break
-      case Acciones.detalles:
-        console.log(accion)
-        // llamar a detalles
-        break
-      default:
-        console.log('default')
-        // manejar esta opcion?
-        break
-    }
-  }
-
-  const handleClicNuevo = () => {
-    if (getTabValue == NavMenu.billeteras) {
-      // llamar a menu de nueva billetera
-    } else if (getTabValue == NavMenu.tokens) {
-      // llamar a menu de nuevo token
-    }
-  }
+  const gestorBilletera = GestorBilleteras.instanciar()
 
   const handleClicRecargar = () => {
     // no se que hace aqui
+  }
+
+  const handleBuscar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextoBusqueda(event.target.value.trim())
   }
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -176,185 +43,48 @@ export default function VistaBilleteras() {
     setPage(0)
   }
 
-  const cargarCelda = (
-    // columna: Columna,
-    // value: Estados | Acciones[] | string
-    row: Billeteras | Tokens
-  ) => {
-    //cambiar el codigfo para que que pueda utiliozar el codigo del TableRow asi el cargarCelda devuelva el TableCell
-    console.log('entoro')
-    getColumnas.map((column: Columna) => {
-      const value = row[column.id]
-      //   switch (column.id) {
-      //     case TipoColumna.simbolo:
-      //       return 'Imagen'
-      //     case TipoColumna.estado:
-      //       return value == Estados.activo ? 'A' : 'I'
-      //     case TipoColumna.acciones:
-      //       if (row instanceof Billeteras) {
-      //         return (
-      //           <>
-      //             {
-      //               // me interesa el estado y el rol de la billetera
-      //               row.estado == Estados.activo &&
-      //                 getBilleteraUsuario.rol == RolesBilleteras.propietario && (
-      //                   <Button>Quitar Rol</Button>
-      //                 )
-      //             }
-      //             {
-      //               // me interesa el rol de la billetera, ya para el texto me interesa el estado
-      //               getBilleteraUsuario.rol == RolesBilleteras.propietario && (
-      //                 <Button>
-      //                   {row.estado == Estados.suspendido
-      //                     ? 'Activar'
-      //                     : 'Suspender'}
-      //                 </Button>
-      //               )
-      //             }
-      //           </>
-      //         )
-      //       } else {
-      //         // entonces es token
-      //         return (
-      //           <>
-      //             {<Button>Modificar</Button>}
-      //             {
-      //               <Button>
-      //                 {row.estado == Estados.suspendido
-      //                   ? 'Activar'
-      //                   : 'Desactivar'}
-      //               </Button>
-      //             }
-      //           </>
-      //         )
-      //       }
-      //     default:
-      //       return value
-      //   }
-      switch (column.id) {
-        case TipoColumna.simbolo:
-          return (
-            <TableCell key={column.id} align={column.align}>
-              {'Imagen'}
-            </TableCell>
-          )
-        case TipoColumna.estado:
-          return (
-            <TableCell key={column.id} align={column.align}>
-              {value == Estados.activo ? 'A' : 'I'}
-            </TableCell>
-          )
-        case TipoColumna.acciones:
-          if (row instanceof Billeteras) {
-            return (
-              <TableCell>
-                {
-                  // me interesa el estado y el rol de la billetera
-                  row.estado == Estados.activo &&
-                    getBilleteraUsuario.rol == RolesBilleteras.propietario && (
-                      <Button>Quitar Rol</Button>
-                    )
-                }
-                {
-                  // me interesa el rol de la billetera, ya para el texto me interesa el estado
-                  getBilleteraUsuario.rol == RolesBilleteras.propietario && (
-                    <Button>
-                      {row.estado == Estados.suspendido
-                        ? 'Activar'
-                        : 'Suspender'}
-                    </Button>
-                  )
-                }
-              </TableCell>
-            )
-          } else {
-            // entonces es token
-            return (
-              <TableCell>
-                {<Button>Modificar</Button>}
-                {
-                  <Button>
-                    {row.estado == Estados.suspendido
-                      ? 'Activar'
-                      : 'Desactivar'}
-                  </Button>
-                }
-              </TableCell>
-            )
-          }
-        default:
-          return (
-            <TableCell key={column.id} align={column.align}>
-              {value}
-            </TableCell>
-          )
-        // return (
-        //   <TableCell key={column.id} align={column.align}>
-        //     {cargarCelda(column, value)}
-        //   </TableCell>
-        // )
-      }
-    })
-  }
-
-  function inicializar() {
-    const data = GestorBilleteras.instanciar().buscar(
-      '',
-      RolesBilleteras.usuario,
-      Estados.todos
-    )
-    setColumnas([
-      {
-        id: TipoColumna.direccion,
-        label: TipoColumna.direccion,
-        minWidth: 50,
-        align: 'left',
-      },
-      {
-        id: TipoColumna.rol,
-        label: TipoColumna.rol,
-        minWidth: 50,
-        align: 'left',
-      },
-      {
-        id: TipoColumna.estado,
-        label: TipoColumna.estado,
-        minWidth: 50,
-        align: 'left',
-      },
-      {
-        id: TipoColumna.acciones,
-        label: TipoColumna.acciones,
-        minWidth: 50,
-        align: 'left',
-      },
-      //continuar
-    ])
-    console.log(data)
-    setTableData(data)
-  }
-
   useEffect(() => {
-    inicializar()
-  }, [])
+    setTableData(
+      gestorBilletera.buscar(getTextoBusqueda, RolesBilleteras.usuario)
+    )
+  }, [getTextoBusqueda])
+
+  const columnas: Columna[] = [
+    {
+      id: TipoColumna.direccion,
+      label: TipoColumna.direccion,
+      minWidth: 50,
+      align: 'left',
+    },
+    {
+      id: TipoColumna.rol,
+      label: TipoColumna.rol,
+      minWidth: 50,
+      align: 'left',
+    },
+    {
+      id: TipoColumna.estado,
+      label: TipoColumna.estado,
+      minWidth: 50,
+      align: 'left',
+    },
+    {
+      id: TipoColumna.acciones,
+      label: TipoColumna.acciones,
+      minWidth: 50,
+      align: 'left',
+    },
+  ]
 
   return (
-    <div>
-      <Button variant="contained" onClick={handleClicNuevo}>
-        Nuevo
-      </Button>
+    <>
+      <Nuevo />
 
-      <TextField id="txt-busqueda" label={getTabValue} variant="outlined" />
-
-      <Checkbox
-        value={getIncluyeBajas}
-        onChange={(e) =>
-          setIncluyeBajas(
-            e.target.valueAsNumber == Estados.activo
-              ? Estados.activo
-              : Estados.suspendido
-          )
-        }
+      <TextField
+        id="txt-busqueda"
+        label={''}
+        variant="outlined"
+        onChange={handleBuscar}
       />
 
       <Button variant="contained" onClick={handleClicRecargar}>
@@ -367,7 +97,7 @@ export default function VistaBilleteras() {
             <TableBody>
               {getTableData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: Billeteras | Tokens) => {
+                .map((row: Billeteras) => {
                   return (
                     <TableRow
                       hover
@@ -375,15 +105,46 @@ export default function VistaBilleteras() {
                       tabIndex={-1}
                       key={Math.random() * 1000}
                     >
-                      {cargarCelda(row)}
-                      {/* {getColumnas.map((column) => {
-                        const value = row[column.id]
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {cargarCelda(column, value)}
-                          </TableCell>
-                        )
-                      })} */}
+                      {columnas.map((column) => {
+                        if (column.id == 'acciones') {
+                          return (
+                            <TableCell key={1} align="left">
+                              {row.rol == RolesBilleteras.administrador && (
+                                <Button
+                                  variant="contained"
+                                  onClick={() => console.log('Quitar Rol')}
+                                >
+                                  Quitar Rol Adminsitrador
+                                </Button>
+                              )}
+                              {row.estado == Estados.suspendido && (
+                                <Button
+                                  variant="contained"
+                                  onClick={() =>
+                                    console.log('Activar Billetera')
+                                  }
+                                >
+                                  Activar
+                                </Button>
+                              )}
+                            </TableCell>
+                          )
+                        } else {
+                          const value = row[column.id]
+                          return (
+                            <TableCell
+                              key={row.direccion + column.id}
+                              align={column.align}
+                            >
+                              {column.id == TipoColumna.estado
+                                ? Estados[value]
+                                : column.id == TipoColumna.rol
+                                ? RolesBilleteras[value]
+                                : value}
+                            </TableCell>
+                          )
+                        }
+                      })}
                     </TableRow>
                   )
                 })}
@@ -400,9 +161,6 @@ export default function VistaBilleteras() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <Button variant="contained" onClick={handleBloquearPlataforma}>
-        Bloquear Plataforma
-      </Button>
-    </div>
+    </>
   )
 }

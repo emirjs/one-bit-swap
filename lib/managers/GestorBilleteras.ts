@@ -1,7 +1,6 @@
 import { RolesBilleteras } from '@lib/types.d'
 import Billeteras from '@models/Billeteras'
 import { listaBilleteras } from 'scripts/modelos'
-import { Estados } from './../types.d'
 
 export default class GestorBilleteras {
   private _billeteras: Array<Billeteras>
@@ -30,17 +29,26 @@ export default class GestorBilleteras {
     return true
   }
 
-  buscar(
-    billetera: string,
-    rol: RolesBilleteras,
-    estado: Estados
-  ): Billeteras[] {
-    return listaBilleteras.filter(
-      (b: Billeteras) =>
-        (b.direccion == billetera || billetera == '') &&
-        (b.rol == rol || rol == RolesBilleteras.usuario) &&
-        (b.estado == estado || estado == Estados.todos)
-    ) as Billeteras[]
+  buscar(billetera: string, rol: RolesBilleteras): Billeteras[] {
+    return listaBilleteras
+      .filter(
+        (b: Billeteras) =>
+          (b.direccion == billetera || billetera == '') &&
+          (rol == RolesBilleteras.usuario
+            ? b.rol == rol
+            : b.rol > RolesBilleteras.usuario)
+      )
+      .sort((a: Billeteras, b: Billeteras) => {
+        return a.rol > b.rol
+          ? -1
+          : a.rol < b.rol
+          ? 1
+          : a.estado > b.estado
+          ? 1
+          : a.estado < b.estado
+          ? -1
+          : 0
+      })
   }
 
   /**
@@ -49,8 +57,10 @@ export default class GestorBilleteras {
    * un rol o poseer un rol incorrecto, devuelve 1 (rol de Usuario)
    */
   verificarRol(billetera: Billeteras | undefined): RolesBilleteras {
-    return billetera?.rol == RolesBilleteras.administrador ||
-      billetera?.rol == RolesBilleteras.propietario
+    return billetera == undefined
+      ? 0
+      : billetera?.rol == RolesBilleteras.administrador ||
+        billetera?.rol == RolesBilleteras.propietario
       ? billetera?.rol
       : RolesBilleteras.usuario
   }

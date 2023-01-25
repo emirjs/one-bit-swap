@@ -1,5 +1,4 @@
 import BlockchainAdapter from '@lib/BlockchainAdapter'
-import Button from '@mui/material/Button'
 import { useState } from 'react'
 import { Datos } from '../typechain-types/contracts/Plataforma'
 
@@ -16,9 +15,9 @@ export default function ContractConnect() {
 
   return (
     <>
-      <Button color="primary" variant="contained" onClick={config}>
+      {/* <Button color="primary" variant="contained" onClick={config}>
         Listar tokens
-      </Button>
+      </Button> */}
       <br />
       {resultado.map((token: Datos.TokenStruct) => (
         <div key={token.ticker as string}>{token.ticker as string}</div>

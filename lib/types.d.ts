@@ -37,6 +37,7 @@ export enum NavMenu {
   miHistorial = 'Historial',
   billeteras = 'Billeteras',
   tokens = 'Tokens',
+  billeterasSuspendidas = 'Billeteras Suspendidas',
 }
 
 export enum Acciones {

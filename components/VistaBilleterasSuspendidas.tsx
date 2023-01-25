@@ -1,10 +1,8 @@
-import GestorTokens from '@lib/managers/GestorTokens'
-import Tokens from '@lib/models/Tokens'
-import { Columna, Estados, TipoColumna } from '@lib/types.d'
+import GestorBilleteras from '@lib/managers/GestorBilleteras'
+import Billeteras from '@lib/models/Billeteras'
+import { Columna, Estados, RolesBilleteras, TipoColumna } from '@lib/types.d'
 import {
   Button,
-  Checkbox,
-  FormControlLabel,
   Paper,
   Table,
   TableBody,
@@ -15,46 +13,23 @@ import {
   TextField,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import NuevoToken from './NuevoToken'
+import Nuevo from './NuevoAdministrador'
 
-export default function VistaTokens() {
-  const [getTableData, setTableData] = useState<Tokens[]>([])
+export default function VistaBilleterasSuspendidas() {
+  const [getTableData, setTableData] = useState<Billeteras[]>([])
   //const [getTableData, setTableData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [getIncluyeBajas, setIncluyeBajas] = useState(true)
   const [getTextoBusqueda, setTextoBusqueda] = useState('')
-  const [getEstadoModal, setEstadoModal] = useState(false)
 
-  const gestorTokens = GestorTokens.instanciar()
-
-  const handleModalNuevo = () => {
-    setEstadoModal(!getEstadoModal)
-  }
-
-  // no esta funcionando bien el filtro conjunto de text y ck¿heck
-  const handleBuscar = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextoBusqueda(event.target.value.trim())
-    // const data = gestorTokens.buscar(
-    //   event.target.value.trim(),
-    //   getIncluyeBajas ? Estados.todos : Estados.activo
-    // )
-    // setTableData(data)
-  }
-
-  const handleCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIncluyeBajas(event.target.checked)
-    // console.log(getTextoBusqueda)
-    // console.log(event.target.checked ? 'todos' : 'activos')
-    // const data = gestorTokens.buscar(
-    //   getTextoBusqueda,
-    //   event.target.checked ? Estados.todos : Estados.activo
-    // )
-    // setTableData(data)
-  }
+  const gestorBilletera = GestorBilleteras.instanciar()
 
   const handleClicRecargar = () => {
     // no se que hace aqui
+  }
+
+  const handleBuscar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextoBusqueda(event.target.value.trim())
   }
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -70,23 +45,20 @@ export default function VistaTokens() {
 
   useEffect(() => {
     setTableData(
-      gestorTokens.buscar(
-        getTextoBusqueda,
-        getIncluyeBajas ? Estados.todos : Estados.activo
-      )
+      gestorBilletera.buscar(getTextoBusqueda, RolesBilleteras.administrador)
     )
-  }, [getTextoBusqueda, getIncluyeBajas])
+  }, [getTextoBusqueda])
 
   const columnas: Columna[] = [
     {
-      id: TipoColumna.ticker,
-      label: TipoColumna.ticker,
+      id: TipoColumna.direccion,
+      label: TipoColumna.direccion,
       minWidth: 50,
       align: 'left',
     },
     {
-      id: TipoColumna.contrato,
-      label: TipoColumna.contrato,
+      id: TipoColumna.rol,
+      label: TipoColumna.rol,
       minWidth: 50,
       align: 'left',
     },
@@ -102,29 +74,17 @@ export default function VistaTokens() {
       minWidth: 50,
       align: 'left',
     },
-    //continuar
   ]
 
   return (
     <>
-      <NuevoToken />
+      <Nuevo />
 
       <TextField
         id="txt-busqueda"
         label={''}
         variant="outlined"
         onChange={handleBuscar}
-      />
-
-      <FormControlLabel
-        control={
-          <Checkbox
-            defaultChecked={true}
-            value={getIncluyeBajas}
-            onChange={handleCheckBox}
-          />
-        }
-        label="Incluye Bajas"
       />
 
       <Button variant="contained" onClick={handleClicRecargar}>
@@ -137,7 +97,7 @@ export default function VistaTokens() {
             <TableBody>
               {getTableData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: Tokens) => {
+                .map((row: Billeteras) => {
                   return (
                     <TableRow
                       hover
@@ -149,28 +109,22 @@ export default function VistaTokens() {
                         if (column.id == 'acciones') {
                           return (
                             <TableCell key={1} align="left">
+                              {row.rol == RolesBilleteras.administrador && (
+                                <Button
+                                  variant="contained"
+                                  onClick={() => console.log('Quitar Rol')}
+                                >
+                                  Quitar Rol Adminsitrador
+                                </Button>
+                              )}
                               {row.estado == Estados.suspendido && (
                                 <Button
                                   variant="contained"
-                                  onClick={() => console.log('Activar token')}
+                                  onClick={() =>
+                                    console.log('Activar Billetera')
+                                  }
                                 >
                                   Activar
-                                </Button>
-                              )}
-                              {row.estado == Estados.activo && (
-                                <Button
-                                  variant="contained"
-                                  onClick={() => console.log('suspender token')}
-                                >
-                                  Suspender
-                                </Button>
-                              )}
-                              {row.estado == Estados.suspendido && (
-                                <Button
-                                  variant="contained"
-                                  onClick={() => console.log('modificar token')}
-                                >
-                                  Modificar
                                 </Button>
                               )}
                             </TableCell>
@@ -179,11 +133,13 @@ export default function VistaTokens() {
                           const value = row[column.id]
                           return (
                             <TableCell
-                              key={row.ticker + column.id}
+                              key={row.direccion + column.id}
                               align={column.align}
                             >
                               {column.id == TipoColumna.estado
                                 ? Estados[value]
+                                : column.id == TipoColumna.rol
+                                ? RolesBilleteras[value]
                                 : value}
                             </TableCell>
                           )

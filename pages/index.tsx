@@ -1,6 +1,6 @@
 import ContractConnect from '@components/ContractConnect'
 import CrearOrden from '@components/Ordenes/crearOrden'
-import ListaOrdenes from '@components/listaOrdenes'
+import VistaOrdenes from '@components/VistaOrdenes'
 import { Box, Grid } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import styles from '@styles/layout.module.scss'
@@ -19,7 +19,7 @@ export default function Home() {
       <Grid item xs={8}>
         <Box sx={sxProps} className={styles.base}>
           <h1>Ordenes Abiertas y demas</h1>
-          <ListaOrdenes />
+          <VistaOrdenes />
           <ContractConnect />
         </Box>
       </Grid>
