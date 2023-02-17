@@ -216,7 +216,7 @@ const o12 = new Ordenes(
 )
 
 const o13 = new Ordenes(
-  '1',
+  '13',
   b1,
   b2,
   tBNB,
@@ -229,7 +229,7 @@ const o13 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o14 = new Ordenes(
-  '2',
+  '14',
   b3,
   b4,
   tBTC,
@@ -242,7 +242,7 @@ const o14 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o15 = new Ordenes(
-  '3',
+  '15',
   b5,
   b6,
   tONE,
@@ -255,7 +255,7 @@ const o15 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o16 = new Ordenes(
-  '4',
+  '16',
   b7,
   b8,
   tDAI,
@@ -268,7 +268,7 @@ const o16 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o17 = new Ordenes(
-  '5',
+  '17',
   b9,
   b10,
   tETH,
@@ -281,7 +281,7 @@ const o17 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o18 = new Ordenes(
-  '6',
+  '18',
   b2,
   b10,
   tETH,
@@ -294,7 +294,7 @@ const o18 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o19 = new Ordenes(
-  '7',
+  '19',
   b3,
   b9,
   tONE,
@@ -307,7 +307,7 @@ const o19 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o20 = new Ordenes(
-  '8',
+  '20',
   b4,
   b8,
   tDAI,
@@ -320,7 +320,7 @@ const o20 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o21 = new Ordenes(
-  '9',
+  '21',
   b5,
   b7,
   tBTC,
@@ -333,7 +333,7 @@ const o21 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o22 = new Ordenes(
-  '10',
+  '22',
   b9,
   b5,
   tBTC,
@@ -346,7 +346,7 @@ const o22 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o23 = new Ordenes(
-  '11',
+  '23',
   b10,
   b5,
   tETH,
@@ -359,7 +359,7 @@ const o23 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o24 = new Ordenes(
-  '12',
+  '24',
   b10,
   b1,
   tDAI,
@@ -372,7 +372,7 @@ const o24 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o25 = new Ordenes(
-  '1',
+  '25',
   b1,
   b2,
   tBNB,
@@ -385,7 +385,7 @@ const o25 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o26 = new Ordenes(
-  '2',
+  '26',
   b3,
   b4,
   tBTC,
@@ -398,7 +398,7 @@ const o26 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o27 = new Ordenes(
-  '3',
+  '27',
   b5,
   b6,
   tONE,
@@ -411,7 +411,7 @@ const o27 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o28 = new Ordenes(
-  '4',
+  '28',
   b7,
   b8,
   tDAI,
@@ -424,7 +424,7 @@ const o28 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o29 = new Ordenes(
-  '5',
+  '29',
   b9,
   b10,
   tETH,
@@ -437,7 +437,7 @@ const o29 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o30 = new Ordenes(
-  '6',
+  '30',
   b2,
   b10,
   tETH,
@@ -450,7 +450,7 @@ const o30 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o31 = new Ordenes(
-  '7',
+  '31',
   b3,
   b9,
   tONE,
@@ -463,7 +463,7 @@ const o31 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o32 = new Ordenes(
-  '8',
+  '32',
   b4,
   b8,
   tDAI,
@@ -476,7 +476,7 @@ const o32 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o33 = new Ordenes(
-  '9',
+  '33',
   b5,
   b7,
   tBTC,
@@ -489,7 +489,7 @@ const o33 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o34 = new Ordenes(
-  '10',
+  '34',
   b9,
   b5,
   tBTC,
@@ -502,7 +502,7 @@ const o34 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o35 = new Ordenes(
-  '11',
+  '35',
   b10,
   b5,
   tETH,
@@ -515,7 +515,7 @@ const o35 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o36 = new Ordenes(
-  '12',
+  '36',
   b10,
   b1,
   tDAI,
@@ -528,7 +528,7 @@ const o36 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o37 = new Ordenes(
-  '1',
+  '37',
   b1,
   b2,
   tBNB,
@@ -541,7 +541,7 @@ const o37 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o38 = new Ordenes(
-  '2',
+  '38',
   b3,
   b4,
   tBTC,
@@ -554,7 +554,7 @@ const o38 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o39 = new Ordenes(
-  '3',
+  '39',
   b5,
   b6,
   tONE,
@@ -567,7 +567,7 @@ const o39 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o40 = new Ordenes(
-  '4',
+  '40',
   b7,
   b8,
   tDAI,
@@ -580,7 +580,7 @@ const o40 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o41 = new Ordenes(
-  '5',
+  '41',
   b9,
   b10,
   tETH,
@@ -593,7 +593,7 @@ const o41 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o42 = new Ordenes(
-  '6',
+  '42',
   b2,
   b10,
   tETH,
@@ -606,7 +606,7 @@ const o42 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o43 = new Ordenes(
-  '7',
+  '43',
   b3,
   b9,
   tONE,
@@ -619,7 +619,7 @@ const o43 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o44 = new Ordenes(
-  '8',
+  '44',
   b4,
   b8,
   tDAI,
@@ -632,7 +632,7 @@ const o44 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o45 = new Ordenes(
-  '9',
+  '45',
   b5,
   b7,
   tBTC,
@@ -645,7 +645,7 @@ const o45 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o46 = new Ordenes(
-  '10',
+  '46',
   b9,
   b5,
   tBTC,
@@ -658,7 +658,7 @@ const o46 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o47 = new Ordenes(
-  '11',
+  '47',
   b10,
   b5,
   tETH,
@@ -671,7 +671,7 @@ const o47 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o48 = new Ordenes(
-  '12',
+  '48',
   b10,
   b1,
   tDAI,
@@ -684,7 +684,7 @@ const o48 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o49 = new Ordenes(
-  '1',
+  '49',
   b1,
   b2,
   tBNB,
@@ -697,7 +697,7 @@ const o49 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o50 = new Ordenes(
-  '2',
+  '50',
   b3,
   b4,
   tBTC,
@@ -710,7 +710,7 @@ const o50 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o51 = new Ordenes(
-  '3',
+  '51',
   b5,
   b6,
   tONE,
@@ -723,7 +723,7 @@ const o51 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o52 = new Ordenes(
-  '4',
+  '52',
   b7,
   b8,
   tDAI,
@@ -736,7 +736,7 @@ const o52 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o53 = new Ordenes(
-  '5',
+  '53',
   b9,
   b10,
   tETH,
@@ -749,7 +749,7 @@ const o53 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o54 = new Ordenes(
-  '6',
+  '54',
   b2,
   b10,
   tETH,
@@ -762,7 +762,7 @@ const o54 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o55 = new Ordenes(
-  '7',
+  '55',
   b3,
   b9,
   tONE,
@@ -775,7 +775,7 @@ const o55 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o56 = new Ordenes(
-  '8',
+  '56',
   b4,
   b8,
   tDAI,
@@ -788,7 +788,7 @@ const o56 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o57 = new Ordenes(
-  '9',
+  '57',
   b5,
   b7,
   tBTC,
@@ -801,7 +801,7 @@ const o57 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o58 = new Ordenes(
-  '10',
+  '58',
   b9,
   b5,
   tBTC,
@@ -814,7 +814,7 @@ const o58 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o59 = new Ordenes(
-  '11',
+  '59',
   b10,
   b5,
   tETH,
@@ -827,7 +827,7 @@ const o59 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o60 = new Ordenes(
-  '12',
+  '60',
   b10,
   b1,
   tDAI,
@@ -840,7 +840,7 @@ const o60 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o61 = new Ordenes(
-  '1',
+  '61',
   b1,
   b2,
   tBNB,
@@ -853,7 +853,7 @@ const o61 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o62 = new Ordenes(
-  '2',
+  '62',
   b3,
   b4,
   tBTC,
@@ -866,7 +866,7 @@ const o62 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o63 = new Ordenes(
-  '3',
+  '63',
   b5,
   b6,
   tONE,
@@ -879,7 +879,7 @@ const o63 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o64 = new Ordenes(
-  '4',
+  '64',
   b7,
   b8,
   tDAI,
@@ -892,7 +892,7 @@ const o64 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o65 = new Ordenes(
-  '5',
+  '65',
   b9,
   b10,
   tETH,
@@ -905,7 +905,7 @@ const o65 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o66 = new Ordenes(
-  '6',
+  '66',
   b2,
   b10,
   tETH,
@@ -918,7 +918,7 @@ const o66 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o67 = new Ordenes(
-  '7',
+  '67',
   b3,
   b9,
   tONE,
@@ -931,7 +931,7 @@ const o67 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o68 = new Ordenes(
-  '8',
+  '68',
   b4,
   b8,
   tDAI,
@@ -944,7 +944,7 @@ const o68 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o69 = new Ordenes(
-  '9',
+  '69',
   b5,
   b7,
   tBTC,
@@ -957,7 +957,7 @@ const o69 = new Ordenes(
   TiposOrdenes.intercambio
 )
 const o70 = new Ordenes(
-  '10',
+  '70',
   b9,
   b5,
   tBTC,
@@ -970,7 +970,7 @@ const o70 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o71 = new Ordenes(
-  '11',
+  '71',
   b10,
   b5,
   tETH,
@@ -983,7 +983,7 @@ const o71 = new Ordenes(
   TiposOrdenes.compraVenta
 )
 const o72 = new Ordenes(
-  '12',
+  '72',
   b10,
   b1,
   tDAI,

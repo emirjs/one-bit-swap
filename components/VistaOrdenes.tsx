@@ -32,8 +32,11 @@ import {
   Tabs,
   TextField,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { b1 } from 'scripts/modelos'
+import EjecutarOrden from './EjecutarOrden'
+
+export const OrdenContext = React.createContext<Ordenes>(undefined)
 
 export default function VistaOrdenes() {
   const [getTokens, setTokens] = useState(Array<Tokens>)
@@ -57,27 +60,11 @@ export default function VistaOrdenes() {
   const gestorTokens = GestorTokens.instanciar()
 
   const handleChangeTokenButton = () => {
-    // if (
-    //   getTokenCompra != null &&
-    //   getTokenCompra != undefined &&
-    //   getTokenVenta != null &&
-    //   getTokenVenta != undefined
-    // ) {
-    // const auxVenta = getBuscarForm.tokenVenta
-    // const auxCompra = getBuscarForm.tokenCompra
     console.log('cambio ' + getTokenCompra + '  por ' + getTokenVenta)
     const aux = getTokenVenta
     setTokenVenta(getTokenCompra)
     setTokenCompra(aux)
     console.log('cambio ' + getTokenCompra + '  por ' + getTokenVenta)
-    // setBuscarForm({
-    //   ...getBuscarForm,
-    //   ...{
-    //     tokenCompra: auxVenta,
-    //     tokenVenta: auxCompra,
-    //   },
-    // })
-    // }
   }
 
   const handleChangeTokenVenta = (
@@ -86,12 +73,6 @@ export default function VistaOrdenes() {
   ) => {
     console.log(value?.ticker)
     setTokenVenta(value)
-    // setBuscarForm({
-    //   ...getBuscarForm,
-    //   ...{
-    //     tokenVenta: value == null ? undefined : value,
-    //   },
-    // })
   }
 
   const handleChangeTokenCompra = (
@@ -100,12 +81,6 @@ export default function VistaOrdenes() {
   ) => {
     console.log(value?.ticker)
     setTokenCompra(value)
-    // setBuscarForm({
-    //   ...getBuscarForm,
-    //   ...{
-    //     tokenCompra: value == null ? undefined : value,
-    //   },
-    // })
   }
 
   const handleChangeSelect = (event: SelectChangeEvent) => {
@@ -127,15 +102,6 @@ export default function VistaOrdenes() {
         undefined
       )
     )
-    // setBuscarForm({
-    //   ...getBuscarForm,
-    //   ...{
-    //     tipoOrden:
-    //       parseInt(event.target.value) == TiposOrdenes.todas
-    //         ? undefined
-    //         : parseInt(event.target.value),
-    //   },
-    // })
   }
 
   const handleTabChange = (
@@ -143,65 +109,7 @@ export default function VistaOrdenes() {
     nuevoValor: NavMenu
   ) => {
     setTabValue(nuevoValor)
-    if (nuevoValor == NavMenu.ordenesAbiertas) {
-      // setOrdenes(
-      //   gestorOrdenes.buscar(
-      //     undefined,
-      //     getTipoOrden == TiposOrdenes.todas ? undefined : getTipoOrden,
-      //     getTokenCompra == null ? undefined : getTokenCompra,
-      //     getTokenVenta == null ? undefined : getTokenVenta,
-      //     getMontoCompra == BigInt(0) ? undefined : getMontoCompra,
-      //     getMontoVenta == BigInt(0) ? undefined : getMontoVenta,
-      //     EstadosOrdenes.activa,
-      //     undefined,
-      //     undefined
-      //   )
-      // )
-
-      // setBuscarForm({
-      //   ...getBuscarForm,
-      //   ...{ billetera: undefined, estado: EstadosOrdenes.activa },
-      // })
-      setTokens(gestorTokens.buscar('', Estados.todos))
-    } else if (nuevoValor == NavMenu.misOrdenes) {
-      // setOrdenes(
-      //   gestorOrdenes.buscar(
-      //     getBilleteraUsuario,
-      //     getTipoOrden == TiposOrdenes.todas ? undefined : getTipoOrden,
-      //     getTokenCompra == null ? undefined : getTokenCompra,
-      //     getTokenVenta == null ? undefined : getTokenVenta,
-      //     getMontoCompra == BigInt(0) ? undefined : getMontoCompra,
-      //     getMontoVenta == BigInt(0) ? undefined : getMontoVenta,
-      //     EstadosOrdenes.activa,
-      //     undefined,
-      //     undefined
-      //   )
-      // )
-      // setBuscarForm({
-      //   ...getBuscarForm,
-      //   ...{ billetera: b1, estado: EstadosOrdenes.activa },
-      // })
-      setTokens(gestorTokens.buscar('', Estados.todos))
-    } else if (nuevoValor == NavMenu.miHistorial) {
-      // setOrdenes(
-      //   gestorOrdenes.buscar(
-      //     getBilleteraUsuario,
-      //     getTipoOrden == TiposOrdenes.todas ? undefined : getTipoOrden,
-      //     getTokenCompra == null ? undefined : getTokenCompra,
-      //     getTokenVenta == null ? undefined : getTokenVenta,
-      //     getMontoCompra == BigInt(0) ? undefined : getMontoCompra,
-      //     getMontoVenta == BigInt(0) ? undefined : getMontoVenta,
-      //     undefined,
-      //     getFechaInicio,
-      //     getFechaFin
-      //   )
-      // )
-      // setBuscarForm({
-      //   ...getBuscarForm,
-      //   ...{ billetera: b1, estado: undefined },
-      // })
-      setTokens(gestorTokens.buscar('', Estados.todos))
-    }
+    setPage(0)
   }
 
   function handleCancelarOrden(id: string) {
@@ -211,7 +119,7 @@ export default function VistaOrdenes() {
   function handleEjecutarOrden(
     tipo: TiposOrdenes,
     id: string,
-    comprador: Billeteras
+    comprador: Billeteras | undefined
   ) {
     gestorOrdenes.EjecutarOrden(tipo, id, comprador)
   }
@@ -228,21 +136,6 @@ export default function VistaOrdenes() {
   }
 
   useEffect(() => {
-    // setOrdenes(
-    //   gestorOrdenes.buscar(
-    //     getBuscarForm.billetera,
-    //     getBuscarForm.tipoOrden == TiposOrdenes.todas
-    //       ? undefined
-    //       : getBuscarForm.tipoOrden,
-    //     getBuscarForm.tokenCompra,
-    //     getBuscarForm.tokenVenta,
-    //     getBuscarForm.montoCompra,
-    //     getBuscarForm.montoVenta,
-    //     getBuscarForm.estado,
-    //     undefined,
-    //     undefined
-    //   )
-    // )
     setOrdenes(
       gestorOrdenes.buscar(
         getTabValue == NavMenu.ordenesAbiertas
@@ -328,12 +221,10 @@ export default function VistaOrdenes() {
         options={getTokens}
         getOptionDisabled={(option: Tokens) =>
           option === getTokenCompra ||
-          //option.ticker === getBuscarForm.tokenCompra?.ticker ||
           (option.estado == Estados.suspendido &&
             getTabValue != NavMenu.miHistorial)
         }
         value={getTokenVenta}
-        // value={getBuscarForm.tokenVenta}
         onChange={handleChangeTokenVenta}
         autoHighlight
         getOptionLabel={(option: Tokens) => option.ticker}
@@ -374,12 +265,10 @@ export default function VistaOrdenes() {
         options={getTokens}
         getOptionDisabled={(option) =>
           option === getTokenVenta ||
-          // option === getBuscarForm.tokenVenta ||
           (option.estado == Estados.suspendido &&
             getTabValue != NavMenu.miHistorial)
         }
         value={getTokenCompra}
-        // value={getBuscarForm.tokenCompra}
         onChange={handleChangeTokenCompra}
         autoHighlight
         getOptionLabel={(option: any) => option.ticker}
@@ -415,7 +304,6 @@ export default function VistaOrdenes() {
         label="Monto de Venta"
         variant="outlined"
         value={getMontoVenta}
-        // value={getBuscarForm.montoVenta}
         onChange={(e) => setMontoVenta(BigInt(e.target.value))}
       />
       <TextField
@@ -423,14 +311,12 @@ export default function VistaOrdenes() {
         label="Monto de Compra"
         variant="outlined"
         value={getMontoCompra}
-        // value={getBuscarForm.montoCompra}
         onChange={(e) => setMontoCompra(BigInt(e.target.value))}
       />
       <Select
         labelId="simple-select-label-tipo-orden"
         id="simple-select-tipo-orden"
         value={getTipoOrden.toString()}
-        // value={getBuscarForm.tipoOrden?.toString()}
         label="Tipo Orden"
         onChange={handleChangeSelect}
       >
@@ -460,13 +346,13 @@ export default function VistaOrdenes() {
             <TableBody>
               {getOrdenes
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+                .map((row: Ordenes) => {
                   return (
                     <TableRow
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.idOrden + Date.now() + Date.now()}
+                      key={row.idOrden + Date.now() * 2}
                     >
                       <TableCell key={row.idOrden + Date.now()} align="left">
                         {row.idOrden}
@@ -505,7 +391,8 @@ export default function VistaOrdenes() {
                         <ButtonGroup>
                           {row.vendedor.direccion ==
                             getBilleteraUsuario?.direccion &&
-                            row.fechaEjecucion == undefined && (
+                            row.fechaEjecucion == undefined &&
+                            getTabValue != NavMenu.ordenesAbiertas && (
                               <Button
                                 onClick={() => handleCancelarOrden(row.idOrden)}
                               >
@@ -515,17 +402,20 @@ export default function VistaOrdenes() {
                           {row.fechaEjecucion == undefined &&
                             row.vendedor.direccion !=
                               getBilleteraUsuario?.direccion && (
-                              <Button
-                                onClick={() =>
-                                  handleEjecutarOrden(
-                                    row.tipo,
-                                    row.idOrden,
-                                    getBilleteraUsuario
-                                  )
-                                }
-                              >
-                                Ejecutar
-                              </Button>
+                              // <Button
+                              //   onClick={() =>
+                              //     handleEjecutarOrden(
+                              //       row.tipo,
+                              //       row.idOrden,
+                              //       getBilleteraUsuario
+                              //     )
+                              //   }
+                              // >
+                              //   Ejecutar
+                              // </Button>
+                              <OrdenContext.Provider value={row}>
+                                <EjecutarOrden />
+                              </OrdenContext.Provider>
                             )}
                         </ButtonGroup>
                       </TableCell>

@@ -3,10 +3,10 @@ import Billeteras from '@lib/models/Billeteras'
 import { NavMenu, RolesBilleteras } from '@lib/types.d'
 import { Box, Tab, Tabs } from '@mui/material'
 import React, { useState } from 'react'
-import { b1 } from 'scripts/modelos'
-import CambiarEstadoPlataforma from './CambiarEstadoPlataforma'
+import { b10 } from 'scripts/modelos'
 import VistaBilleteras from './VistaBilleteras'
 import VistaBilleterasSuspendidas from './VistaBilleterasSuspendidas'
+import VistaConfiguracion from './VistaConfiguracion'
 import VistaTokens from './VistaTokens'
 
 interface TabPanelProps {
@@ -32,8 +32,8 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export default function VistaAdminsitrador() {
-  const [getTabValue, setTabValue] = useState(NavMenu.billeteras)
-  const [getBilleteraUsuario, setBilleteraUsuario] = useState<Billeteras>(b1)
+  const [getTabValue, setTabValue] = useState(NavMenu.configuracion)
+  const [getBilleteraUsuario, setBilleteraUsuario] = useState<Billeteras>(b10)
   const gestorBilletera = GestorBilleteras.instanciar()
 
   const handleTabChange = (
@@ -54,6 +54,10 @@ export default function VistaAdminsitrador() {
       >
         {gestorBilletera.verificarRol(getBilleteraUsuario) >
           RolesBilleteras.usuario && (
+          <Tab value={NavMenu.configuracion} label={NavMenu.configuracion} />
+        )}
+        {gestorBilletera.verificarRol(getBilleteraUsuario) >
+          RolesBilleteras.usuario && (
           <Tab value={NavMenu.billeteras} label={NavMenu.billeteras} />
         )}
         {gestorBilletera.verificarRol(getBilleteraUsuario) >
@@ -69,6 +73,11 @@ export default function VistaAdminsitrador() {
         )}
       </Tabs>
 
+      <TabPanel value={getTabValue} index={NavMenu.configuracion}>
+        {gestorBilletera.verificarRol(getBilleteraUsuario) >
+          RolesBilleteras.usuario && <VistaConfiguracion />}
+      </TabPanel>
+
       <TabPanel value={getTabValue} index={NavMenu.billeteras}>
         {gestorBilletera.verificarRol(getBilleteraUsuario) >
           RolesBilleteras.usuario && <VistaBilleteras />}
@@ -83,8 +92,6 @@ export default function VistaAdminsitrador() {
         {gestorBilletera.verificarRol(getBilleteraUsuario) >
           RolesBilleteras.usuario && <VistaTokens />}
       </TabPanel>
-
-      <CambiarEstadoPlataforma />
     </div>
   )
 }

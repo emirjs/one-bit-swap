@@ -15,55 +15,45 @@ const style = {
   pb: 3,
 }
 
-export default function NuevoToken() {
-  const [getContrato, setContrato] = useState('')
-  const [getOraculo, setOraculo] = useState('')
+export default function NuevoSuspendido() {
+  const [getDireccion, setDireccion] = useState('')
   const [getEstadoModal, setEstadoModal] = useState(false)
 
-  const handleModalNuevo = () => {
+  const handleAbrirModal = () => {
     setEstadoModal(!getEstadoModal)
   }
-  const handleCrear = () => {
-    console.log('Creado')
+
+  const handleSuspender = () => {
+    console.log('Nuevo Suspendido')
     setEstadoModal(!getEstadoModal)
   }
 
   return (
     <>
-      <Button variant="contained" onClick={handleModalNuevo}>
-        Nuevo
+      <Button variant="contained" onClick={handleAbrirModal}>
+        Suspender
       </Button>
       <Modal
         open={getEstadoModal}
-        onClose={handleModalNuevo}
+        onClose={handleAbrirModal}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: 400 }}>
           <Box>
-            <h2>Creación de Nuevo Token</h2>
+            <h2>Suspender Billetera</h2>
             <TextField
               required
-              id="contrato-required"
-              label="Contrato"
+              id="direccion-required"
+              label="direccion"
               variant="standard"
-              value={getContrato}
+              value={getDireccion}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setContrato(event.target.value.trim())
-              }
-            />
-            <TextField
-              required
-              id="oraculo-required"
-              label="Oraculo"
-              variant="standard"
-              value={getOraculo}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setOraculo(event.target.value.trim())
+                setDireccion(event.target.value.trim())
               }
             />
           </Box>
-          <Button onClick={handleCrear}>Crear</Button>
+          <Button onClick={handleSuspender}>Suspender</Button>
         </Box>
       </Modal>
     </>

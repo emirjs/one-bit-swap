@@ -38,6 +38,7 @@ export enum NavMenu {
   billeteras = 'Billeteras',
   tokens = 'Tokens',
   billeterasSuspendidas = 'Billeteras Suspendidas',
+  configuracion = 'Configuración',
 }
 
 export enum Acciones {
@@ -53,23 +54,23 @@ export enum Acciones {
 export enum TipoColumna {
   // ordenes
   id = 'id',
-  tipo = 'tipo',
-  cantidadVenta = 'cantidadVenta',
-  tokenVenta = 'tokenVenta',
-  cantidadCompra = 'cantidadCompra',
-  tokenCompra = 'tokenCompra',
-  fechaCreacion = 'fechaCreacion',
-  boton = 'boton',
+  tipo = 'Tipo',
+  cantidadVenta = 'Cantidad de Venta',
+  tokenVenta = 'Venta',
+  cantidadCompra = 'Cantidad de Compra',
+  tokenCompra = 'Compra',
+  fechaCreacion = 'Fecha de Creacion',
+  boton = 'Boton',
   // tokens
-  ticker = 'ticker',
-  simbolo = 'simbolo',
-  contrato = 'contrato',
+  ticker = 'Ticker',
+  simbolo = 'Simbolo',
+  contrato = 'Contrato',
   // billeteras
-  rol = 'rol',
-  direccion = 'direccion',
+  rol = 'Rol',
+  direccion = 'Direccion',
   // comunes
-  estado = 'estado',
-  acciones = 'acciones',
+  estado = 'Estado',
+  acciones = 'Acciones',
 }
 
 export interface Columna {

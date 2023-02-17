@@ -10,12 +10,15 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableHead,
   TablePagination,
   TableRow,
   TextField,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
-import NuevoToken from './NuevoToken'
+import React, { useEffect, useState } from 'react'
+import NuevoModificaToken from './NuevoModificaToken'
+
+export const EsNuevoContext = React.createContext<Tokens | undefined>(undefined)
 
 export default function VistaTokens() {
   const [getTableData, setTableData] = useState<Tokens[]>([])
@@ -24,33 +27,16 @@ export default function VistaTokens() {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [getIncluyeBajas, setIncluyeBajas] = useState(true)
   const [getTextoBusqueda, setTextoBusqueda] = useState('')
-  const [getEstadoModal, setEstadoModal] = useState(false)
-
+  //const [getEsNuevo, setEsNuevo] = useState<Tokens | undefined>(undefined)
   const gestorTokens = GestorTokens.instanciar()
-
-  const handleModalNuevo = () => {
-    setEstadoModal(!getEstadoModal)
-  }
 
   // no esta funcionando bien el filtro conjunto de text y ck¿heck
   const handleBuscar = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextoBusqueda(event.target.value.trim())
-    // const data = gestorTokens.buscar(
-    //   event.target.value.trim(),
-    //   getIncluyeBajas ? Estados.todos : Estados.activo
-    // )
-    // setTableData(data)
   }
 
   const handleCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIncluyeBajas(event.target.checked)
-    // console.log(getTextoBusqueda)
-    // console.log(event.target.checked ? 'todos' : 'activos')
-    // const data = gestorTokens.buscar(
-    //   getTextoBusqueda,
-    //   event.target.checked ? Estados.todos : Estados.activo
-    // )
-    // setTableData(data)
   }
 
   const handleClicRecargar = () => {
@@ -102,12 +88,13 @@ export default function VistaTokens() {
       minWidth: 50,
       align: 'left',
     },
-    //continuar
   ]
 
   return (
     <>
-      <NuevoToken />
+      <EsNuevoContext.Provider value={undefined}>
+        <NuevoModificaToken />
+      </EsNuevoContext.Provider>
 
       <TextField
         id="txt-busqueda"
@@ -134,6 +121,19 @@ export default function VistaTokens() {
       <Paper sx={{ width: '100%' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columnas.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ top: 0, minWidth: column.minWidth }}
+                  >
+                    {column.label == TipoColumna.acciones ? '' : column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
             <TableBody>
               {getTableData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -145,50 +145,38 @@ export default function VistaTokens() {
                       tabIndex={-1}
                       key={Math.random() * 1000}
                     >
-                      {columnas.map((column) => {
-                        if (column.id == 'acciones') {
-                          return (
-                            <TableCell key={1} align="left">
-                              {row.estado == Estados.suspendido && (
-                                <Button
-                                  variant="contained"
-                                  onClick={() => console.log('Activar token')}
-                                >
-                                  Activar
-                                </Button>
-                              )}
-                              {row.estado == Estados.activo && (
-                                <Button
-                                  variant="contained"
-                                  onClick={() => console.log('suspender token')}
-                                >
-                                  Suspender
-                                </Button>
-                              )}
-                              {row.estado == Estados.suspendido && (
-                                <Button
-                                  variant="contained"
-                                  onClick={() => console.log('modificar token')}
-                                >
-                                  Modificar
-                                </Button>
-                              )}
-                            </TableCell>
-                          )
-                        } else {
-                          const value = row[column.id]
-                          return (
-                            <TableCell
-                              key={row.ticker + column.id}
-                              align={column.align}
-                            >
-                              {column.id == TipoColumna.estado
-                                ? Estados[value]
-                                : value}
-                            </TableCell>
-                          )
-                        }
-                      })}
+                      <TableCell key={row.ticker} align="left">
+                        {row.ticker}
+                      </TableCell>
+                      <TableCell key={row.contrato} align="left">
+                        {row.contrato}
+                      </TableCell>
+                      <TableCell key={row.estado} align="left">
+                        {row.estado == Estados.activo ? 'Activo' : 'Suspendido'}
+                      </TableCell>
+                      <TableCell key={row.ticker + row.contrato} align="left">
+                        {row.estado == Estados.suspendido && (
+                          <Button
+                            variant="contained"
+                            onClick={() => console.log('Activar token')}
+                          >
+                            Activar
+                          </Button>
+                        )}
+                        {row.estado == Estados.activo && (
+                          <Button
+                            variant="contained"
+                            onClick={() => console.log('suspender token')}
+                          >
+                            Suspender
+                          </Button>
+                        )}
+                        {row.estado == Estados.suspendido && (
+                          <EsNuevoContext.Provider value={row}>
+                            <NuevoModificaToken />
+                          </EsNuevoContext.Provider>
+                        )}
+                      </TableCell>
                     </TableRow>
                   )
                 })}

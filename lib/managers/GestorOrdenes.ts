@@ -43,13 +43,16 @@ export default class GestorOrdenes {
     // todo: aqui hay que llamar al contrato
     const data = listaTodasOrdenes.filter((o: Ordenes) => {
       return (
-        (o.vendedor.direccion == billetera?.direccion || billetera == null) &&
-        (o.tipo == tipo || tipo == null) &&
-        (o.tokenCompra.ticker == tokenCompra?.ticker || tokenCompra == null) &&
-        (o.tokenVenta.ticker == tokenVenta?.ticker || tokenVenta == null) &&
-        (o.montoCompra == montoCompra || montoCompra == null) &&
-        (o.montoVenta == montoVenta || montoVenta == null) &&
-        (o.estado == estado || estado == null)
+        (o.vendedor.direccion == billetera?.direccion ||
+          billetera == undefined) &&
+        (o.tipo == tipo || tipo == undefined) &&
+        (o.tokenCompra.ticker == tokenCompra?.ticker ||
+          tokenCompra == undefined) &&
+        (o.tokenVenta.ticker == tokenVenta?.ticker ||
+          tokenVenta == undefined) &&
+        (o.montoCompra == montoCompra || montoCompra == undefined) &&
+        (o.montoVenta == montoVenta || montoVenta == undefined) &&
+        (o.estado == estado || estado == undefined)
       )
     })
     return data

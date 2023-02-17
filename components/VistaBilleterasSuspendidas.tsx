@@ -1,6 +1,6 @@
 import GestorBilleteras from '@lib/managers/GestorBilleteras'
 import Billeteras from '@lib/models/Billeteras'
-import { Columna, Estados, RolesBilleteras, TipoColumna } from '@lib/types.d'
+import { Estados, RolesBilleteras } from '@lib/types.d'
 import {
   Button,
   Paper,
@@ -8,12 +8,13 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableHead,
   TablePagination,
   TableRow,
   TextField,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import Nuevo from './NuevoAdministrador'
+import Nuevo from './NuevoSuspendido'
 
 export default function VistaBilleterasSuspendidas() {
   const [getTableData, setTableData] = useState<Billeteras[]>([])
@@ -45,36 +46,9 @@ export default function VistaBilleterasSuspendidas() {
 
   useEffect(() => {
     setTableData(
-      gestorBilletera.buscar(getTextoBusqueda, RolesBilleteras.administrador)
+      gestorBilletera.buscar(getTextoBusqueda, RolesBilleteras.usuario)
     )
   }, [getTextoBusqueda])
-
-  const columnas: Columna[] = [
-    {
-      id: TipoColumna.direccion,
-      label: TipoColumna.direccion,
-      minWidth: 50,
-      align: 'left',
-    },
-    {
-      id: TipoColumna.rol,
-      label: TipoColumna.rol,
-      minWidth: 50,
-      align: 'left',
-    },
-    {
-      id: TipoColumna.estado,
-      label: TipoColumna.estado,
-      minWidth: 50,
-      align: 'left',
-    },
-    {
-      id: TipoColumna.acciones,
-      label: TipoColumna.acciones,
-      minWidth: 50,
-      align: 'left',
-    },
-  ]
 
   return (
     <>
@@ -94,6 +68,22 @@ export default function VistaBilleterasSuspendidas() {
       <Paper sx={{ width: '100%' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  key="direccion"
+                  align="left"
+                  style={{ top: 0, minWidth: 50 }}
+                >
+                  Dirección
+                </TableCell>
+                <TableCell
+                  key="acciones"
+                  align="left"
+                  style={{ top: 0, minWidth: 50 }}
+                ></TableCell>
+              </TableRow>
+            </TableHead>
             <TableBody>
               {getTableData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -105,46 +95,19 @@ export default function VistaBilleterasSuspendidas() {
                       tabIndex={-1}
                       key={Math.random() * 1000}
                     >
-                      {columnas.map((column) => {
-                        if (column.id == 'acciones') {
-                          return (
-                            <TableCell key={1} align="left">
-                              {row.rol == RolesBilleteras.administrador && (
-                                <Button
-                                  variant="contained"
-                                  onClick={() => console.log('Quitar Rol')}
-                                >
-                                  Quitar Rol Adminsitrador
-                                </Button>
-                              )}
-                              {row.estado == Estados.suspendido && (
-                                <Button
-                                  variant="contained"
-                                  onClick={() =>
-                                    console.log('Activar Billetera')
-                                  }
-                                >
-                                  Activar
-                                </Button>
-                              )}
-                            </TableCell>
-                          )
-                        } else {
-                          const value = row[column.id]
-                          return (
-                            <TableCell
-                              key={row.direccion + column.id}
-                              align={column.align}
-                            >
-                              {column.id == TipoColumna.estado
-                                ? Estados[value]
-                                : column.id == TipoColumna.rol
-                                ? RolesBilleteras[value]
-                                : value}
-                            </TableCell>
-                          )
-                        }
-                      })}
+                      <TableCell key={row.direccion} align="left">
+                        {row.direccion}
+                      </TableCell>
+                      <TableCell key={row.direccion + row.rol} align="left">
+                        {row.estado == Estados.suspendido && (
+                          <Button
+                            variant="contained"
+                            onClick={() => console.log('Activar Billetera')}
+                          >
+                            Activar
+                          </Button>
+                        )}
+                      </TableCell>
                     </TableRow>
                   )
                 })}
